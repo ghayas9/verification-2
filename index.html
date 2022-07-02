@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const data = async ()=>{
+            const x= await fetch('http://localhost:9000/compony/login',{
+                method:"POST",
+                headers:{"Content-Types":"application/json"},
+                body:{
+                    "email":"gdjhdjahs"
+                }
+            })
+
+            console.log(x)
+
+            
+        }
+
+        data()
+    </script>
+</body>
+</html>

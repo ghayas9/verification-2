@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>LINKS</h1>
+    <h5>
+        <a href="https://only999backend.herokuapp.com/AllProducts">ALL PRODUCTS</a>
+    </h5>
+    <div id="abc">
+    </div>
+
+    <script>
+        function delete_p(id){
+            fetch('https://only999backend.herokuapp.com/DeleteProduct/'+id, {
+            method: 'DELETE',
+            })
+            .then(res => res.json()) // or res.json()
+            .then(res => console.log(res))
+        }
+         async function data(){
+           var result= await  fetch("https://only999backend.herokuapp.com/AllProducts");
+           var res =await result.json();
+           console.log(res)
+
+           var theDiv = document.getElementById("abc");
+
+           res.forEach(element => {
+            // var content = document.createTextNode();
+            theDiv.innerHTML += 
+            `<h5>
+                ${element['_id']} ||
+
+                <button onclick="delete_p(${element['_id']})">Delete</button>
+                
+            </h5>`;
+            
+           });
+            
+            
+
+         }
+         data()
+    </script>
+    
+
+</body>
+</html>

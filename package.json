@@ -1,0 +1,40 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "only999",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "starth": "export HTTPS=true&&SSL_CRT_FILE=cert.pem&&SSL_KEY_FILE=key.pem nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "backend"
+  },
+  "keywords": [
+    "backend"
+  ],
+  "author": "GHAYAS",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "fs": "^0.0.1-security",
+    "googleapis": "^97.0.0",
+    "idanalyzer": "^1.2.7",
+    "jimp": "^0.16.1",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.4",
+    "multer": "^1.4.4",
+    "multer-google-drive": "^1.0.3",
+    "nodemailer": "^6.7.5"
+  },
+  "engines": {
+    "node": "14.19.0"
+  }
+}
