@@ -49,12 +49,12 @@ app.get('/',(req,res)=>{
 })
 
 
-const server = https.createServer({
-    key: fs.readFileSync('./key.pem', 'utf8'),
-    cert: fs.readFileSync('./server.crt', 'utf8')
-},app)
-server.listen(port, () => console.log(port));
-// app.listen(port, () => console.log(port));
+// const server = https.createServer({
+//     key: fs.readFileSync('./key.pem', 'utf8'),
+//     cert: fs.readFileSync('./server.crt', 'utf8')
+// },app)
+// server.listen(port, () => console.log(port));
+app.listen(port, () => console.log(port));
 
 
 
