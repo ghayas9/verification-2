@@ -60,8 +60,16 @@ module.exports = {
                     return res.json({success:true,data:emp,message:'KYC Completed'})
                     }
             }
+            if(result.face){
+                if(result.face.error_message){
+                    return res.status(400).json({success:true,message:result.face.error_message})
+                }
+            }
+            if(result.error){
+                return res.status(400).json({success:true,message:result.error.message})
+            }
             console.log('no error kyc fail')
-            return res.status(400).json({success:true,data:result,message:'KYC Not Complete Try again'})
+            return res.status(400).json({success:false,message:'KYC Not Complete Try again'})
             
         }catch(err){
             console.log(err)
