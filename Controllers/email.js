@@ -34,6 +34,9 @@ module.exports ={sendMail:async(req,res,email,name,token)=> {
           subject: 'you are invited from AML',
           text: 'Hello from gmail email using API',
           html: `<div>
+                    <div style="color:gray;padding:25px text-align:center">
+
+                    </div>
                     <h1 style='color:blue;'>Hi ${name}</h1>
                     <br>
                     <h5>You are invited from ${req.payload.name}</h5>

@@ -18,6 +18,7 @@ const mongoose = require('mongoose')
 const IDAnalyzer = require("idanalyzer");  
 // const CoreAPI = new IDAnalyzer.CoreAPI("nccNkiIeW6l6KbBPuocTG3uc5KpgcZmo","US");  
 const CoreAPI = new IDAnalyzer.CoreAPI("wdfJl0WGWKFjwhOSHoQrMjzqaTvoui1w","US");  
+const aml = new IDAnalyzer.AMLAPI("wdfJl0WGWKFjwhOSHoQrMjzqaTvoui1w","US");
 CoreAPI.enableAuthentication(true, 2);
 
 const EmployeesSchema = require('../Models/Employees');
@@ -74,12 +75,44 @@ module.exports = {
         }catch(err){
             console.log(err)
             return res.status(400).json({success:false,data:err,message:'KYC Not Complete Try again'})
-           
         }
         }catch(err){
             console.log(err)
             return res.status(401).json({success:false,message:'Invitation code error'})
         }
         
+    },
+    AMLtesting:async(req,res)=>{
+        // const value = Joi.object({
+        //     name: Joi.string().required(),
+        // }).validate(req.body)
+        // if(value.error){
+        //     return res.status(400).json({
+        //          success: false, message:value.error.message
+        //     })
+        // }
+        
+        // // aml.searchByName
+        // aml.searchByIDNumber(req.body.name).then(function (response) {
+        //     var message = ''
+        //     if(response.items.length>0){
+        //       message = response.items.map((el,i)=>{
+        //             return`${i+1}:${el.note?el.note:el.database}`; 
+        //         })
+        //     }
+        //     console.log(message);
+        //   return res.json({success:false,message:response})
+        // }).catch(function (err) {
+        //     console.log(err.message);
+        //     return res.status(500).json({err})
+        // });
+        // console.log(req.socket.remoteAddress);
+        res.send(req.ip)
+
+        // aml.searchByIDNumber("AALH750218HBCLPC02").then(function (response) {
+        //     console.log(response);
+        // }).catch(function (err) {
+        //     console.log(err.message);
+        // });
     }
 }
