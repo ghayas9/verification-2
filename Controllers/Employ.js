@@ -1,5 +1,6 @@
 const Jimp = require('jimp')
 const path = require('path')
+var getIP = require('ipware')().get_ip;
 const base64ToPng =(data)=>{
     const name = Date.now()+'.png'
     const smp = data.replace('data:image/png;base64,', '');
@@ -107,7 +108,7 @@ module.exports = {
         //     return res.status(500).json({err})
         // });
         // console.log(req.socket.remoteAddress);
-        res.send(req.ip)
+        res.send(getIP(req))
 
         // aml.searchByIDNumber("AALH750218HBCLPC02").then(function (response) {
         //     console.log(response);

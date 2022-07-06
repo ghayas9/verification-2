@@ -26,6 +26,7 @@
     "fs": "^0.0.1-security",
     "googleapis": "^97.0.0",
     "idanalyzer": "^1.2.7",
+    "ipware": "^2.0.0",
     "jimp": "^0.16.1",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
