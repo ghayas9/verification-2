@@ -32,6 +32,8 @@ app.use(cors({
     origin:'*'
 })
 );
+
+
 // const requestIp =require('request-ip')
 
 // app.use(requestIp.mw())
@@ -40,8 +42,11 @@ app.use(cors({
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const { loc } = require('./Controllers/auth');
+app.use(loc)
 
 const company =require('./Routers/Company');
+
 app.use(require('./Routers/verification.js'))
 app.use(require('./Routers/Employ'))
 app.use('/company',company)

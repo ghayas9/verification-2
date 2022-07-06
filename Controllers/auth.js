@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken')
 const { JwtKey } = require('../Config/jwtConfig')
 
+const getIP = require('ipware')().get_ip;
+const geoip = require('geoip-lite');
+
 
 
 const CreatToken=(data)=>{
@@ -52,7 +55,20 @@ const verify =async(req,res,next)=>{
     }
 }
 
+const loc = (req,res,next)=>{
+        try{
+        req.loc =geoip.lookup(getIP(req).clientIp) 
+        req.ip = getIP(req).clientIp
+        console.log(getIP(req).clientIp)
+        }catch(err){
+            console.log(err);
+        }finally{
+            next() 
+        }
+    }
+
 module.exports ={
+    loc,
     CreatToken,
     verify,
     verifyToken,
