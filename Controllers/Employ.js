@@ -1,6 +1,7 @@
 const Jimp = require('jimp')
 const path = require('path')
 var getIP = require('ipware')().get_ip;
+var geoip = require('geoip-lite');
 const base64ToPng =(data)=>{
     const name = Date.now()+'.png'
     const smp = data.replace('data:image/png;base64,', '');
@@ -108,7 +109,7 @@ module.exports = {
         //     return res.status(500).json({err})
         // });
         // console.log(req.socket.remoteAddress);
-        res.send(getIP(req))
+        res.send(geoip.lookup(getIP(req).clientIp))
 
         // aml.searchByIDNumber("AALH750218HBCLPC02").then(function (response) {
         //     console.log(response);
