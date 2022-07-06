@@ -32,7 +32,9 @@ app.use(cors({
     origin:'*'
 })
 );
+// const requestIp =require('request-ip')
 
+// app.use(requestIp.mw())
 // app.use(multer().array())
 
 app.use(bodyParser.json({limit: '50mb'}))
