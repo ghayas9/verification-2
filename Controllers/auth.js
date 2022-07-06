@@ -57,9 +57,8 @@ const verify =async(req,res,next)=>{
 
 const loc = (req,res,next)=>{
         try{
-        req.loc =geoip.lookup(getIP(req).clientIp) 
-        req.ip = getIP(req).clientIp
-        console.log(getIP(req).clientIp)
+        const loc ={loc:geoip.lookup(getIP(req).clientIp),ip:getIP(req)}
+        req.loc = loc
         }catch(err){
             console.log(err);
         }finally{
