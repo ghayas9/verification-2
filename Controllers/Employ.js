@@ -44,7 +44,7 @@ module.exports = {
             const tokenData = await verifyToken(req.params.token)
         try{
             
-            const result =await CoreAPI.scan({ document_primary: data.IdCard, biometric_photo: data.Profile})
+            const result =await CoreAPI.scan({ document_primary: data.IdCard, biometric_photo: data.Profile,AMLtesting:true})
             console.log(result)
             if(result.verification){
                 if(result.verification.passed===true){

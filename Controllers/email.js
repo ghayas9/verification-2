@@ -12,7 +12,7 @@ const oAuth2Client = new google.auth.OAuth2(
     );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-module.exports ={sendMail:async(req,res,email,name,token)=> {
+module.exports ={sendMail:async(req,res,nv,token)=> {
     try {
         const accessToken = await oAuth2Client.getAccessToken();
         const transport = nodemailer.createTransport({
@@ -30,16 +30,16 @@ module.exports ={sendMail:async(req,res,email,name,token)=> {
         const url = host+'/acceptInvitation/'+token 
         const mailOptions = {
           from: 'AML <backendtesting9@gmail.com>',
-          to: email,
+          to: nv.email,
           subject: 'you are invited from AML',
           text: 'Hello from gmail email using API',
           html: `<div>
                     <div style="color:gray;padding:25px text-align:center">
 
                     </div>
-                    <h1 style='color:blue;'>Hi ${name}</h1>
+                    <h1 style='color:blue;'>Hi ${'User'}</h1>
                     <br>
-                    <h5>You are invited from ${req.payload.name}</h5>
+                    <h5>You are invited from ${'AML'}</h5>
                     <br>
                     <a style='padding:25px; color:blue' href='${url}'>Join</a>
                 </div>`
