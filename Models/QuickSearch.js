@@ -7,7 +7,7 @@ const quickNameSearch = new mongoose.Schema({
     dob:String,
     documentnumber:String,
     country:String,
-    amlReuslt:Object
+    amlReuslt:String
 })
 
 module.exports =mongoose.model('quickSearch',quickNameSearch)
