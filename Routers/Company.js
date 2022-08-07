@@ -1,6 +1,6 @@
 const express = require('express')
 const { verify } = require('../Controllers/auth')
-const { Register, LogIn, sendInvitation, allEmpolyies, deleteEmployee, GetSingleEmployee, ScanDouc, quickNameSearch} = require('../Controllers/Company')
+const { Register, LogIn, sendInvitation, allEmpolyies, deleteEmployee, GetSingleEmployee, ScanDouc, quickNameSearch, getAllQuickSearch, getOneQuickSearch, getAllScan, getOneScan} = require('../Controllers/Company')
 
 const router = express.Router()
 
@@ -10,8 +10,17 @@ router.post('/send',verify,sendInvitation)
 router.get('/employees',verify,allEmpolyies)
 router.delete('/employee/:id',verify,deleteEmployee)
 router.get('/employee/:id',verify,GetSingleEmployee)
-router.post('/scan',ScanDouc)
+
+
+////////////////////////////////////
 router.post('/aml',verify,quickNameSearch)
+router.get('/quicksearch',verify,getAllQuickSearch)
+router.get('/quicksearch/:id',verify,getOneQuickSearch)
+/////////////////////////////////////////////////////
+
+router.post('/scan',verify,ScanDouc)
+router.get('/scan',verify,getAllScan)
+router.get('/scan/:id',verify,getOneScan)
 // router.post('/img',uploadImage)
 
 
