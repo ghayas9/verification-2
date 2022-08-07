@@ -82,27 +82,44 @@ module.exports = {
                 message: value.error.message
             })
         }
-        const newCompany = new Company()
-        var hash = bcrypt.hashSync(req.body.password, salt);
+        try{
+            const chk = await Company.findOne({email:req.body.email})
+        if(!chk){
+                const newCompany = new Company()
+                var hash = bcrypt.hashSync(req.body.password, salt);
 
-        newCompany._id = mongoose.Types.ObjectId()
-        newCompany.name = req.body.name
-        newCompany.email = req.body.email
-        newCompany.contact = req.body.contact
-        newCompany.password = hash
+                newCompany._id = mongoose.Types.ObjectId()
+                newCompany.name = req.body.name
+                newCompany.email = req.body.email
+                newCompany.contact = req.body.contact
+                newCompany.password = hash
 
-        try {
-            const data = await newCompany.save()
-            res.status(200).json({
-                success: true,
-                message: 'successfully added',
-                comp: data
-            })
-        } catch (err) {
-            console.log(err)
-            res.status(400).json({
+                try {
+                    const data = await newCompany.save()
+                  return  res.status(200).json({
+                        success: true,
+                        message: 'successfully added',
+                        comp: data
+                    })
+                } catch (err) {
+                    console.log(err)
+                    return res.status(400).json({
+                        success: false,
+                        message: err
+                    })
+                }
+        }else{
+            return res.status(400).json({
                 success: false,
-                message: err
+                message: 'Email Allready Register'
+            })
+        }
+        
+        }catch(err){
+            return res.status(400).json({
+                success: false,
+                err,
+                message:'server issue'
             })
         }
     },
