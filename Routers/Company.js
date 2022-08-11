@@ -25,7 +25,7 @@ router.get('/scan/:id',verify,getOneScan)
 // router.post('/img',uploadImage)
 
 router.post('/emailverification/:id',emailVerification)
-router.post('/emailverification',verify,AllInitation)
+router.get('/emailverification',verify,AllInitation)
 router.get('/emailverification/:id',verify,getOneInvite)
 
 
