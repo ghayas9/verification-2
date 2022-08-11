@@ -5,9 +5,6 @@ const mongoose =require('mongoose');
 const cors =require('cors');
 const multer = require('multer')
 const port = process.env.PORT || 9000
-const fs =require('fs')
-const https = require('https')
-const path = require('path')
 
 // **************************************//
 // ***********   DATABASE CONN *********//
@@ -47,9 +44,9 @@ app.use(loc)
 
 const company =require('./Routers/Company');
 
-app.use(require('./Routers/verification.js'))
-app.use(require('./Routers/Employ'))
+
 app.use('/company',company)
+
 
 app.get('/',(req,res)=>{
     res.send('hh')

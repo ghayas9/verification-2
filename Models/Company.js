@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 
 const companySchema = new mongoose.Schema({
     _id:mongoose.Types.ObjectId,
-    logo:{type:String},
     name:{
         type:String,
         required:[true,'Name Is required']
@@ -18,6 +17,10 @@ const companySchema = new mongoose.Schema({
     password:{
       type:String,  
       required:[true,'Password Is required']
+    },
+    idAdmin:{
+        type:Boolean,
+        default:false
     },
     verify:{
         type:Boolean,

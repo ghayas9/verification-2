@@ -1,6 +1,7 @@
 const express = require('express')
 const { verify } = require('../Controllers/auth')
-const { Register, LogIn, sendInvitation, allEmpolyies, deleteEmployee, GetSingleEmployee, ScanDouc, quickNameSearch, getAllQuickSearch, getOneQuickSearch, getAllScan, getOneScan} = require('../Controllers/Company')
+const { Register, LogIn, sendInvitation, allEmpolyies, deleteEmployee, GetSingleEmployee, ScanDouc, quickNameSearch, getAllQuickSearch, getOneQuickSearch, getAllScan, getOneScan, AllInitation, getOneInvite} = require('../Controllers/Company')
+const { emailVerification } = require('../Controllers/EmailVerification')
 
 const router = express.Router()
 
@@ -22,6 +23,10 @@ router.post('/scan',verify,ScanDouc)
 router.get('/scan',verify,getAllScan)
 router.get('/scan/:id',verify,getOneScan)
 // router.post('/img',uploadImage)
+
+router.post('/emailverification/:id',emailVerification)
+router.post('/emailverification',verify,AllInitation)
+router.get('/emailverification/:id',verify,getOneInvite)
 
 
 module.exports = router

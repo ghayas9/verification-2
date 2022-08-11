@@ -226,7 +226,7 @@ module.exports = {
     AllInitation: async (req, res) => {
         try {
             const Invites = await EmailVerification.find({ CId: req.payload._id })
-            res.json({ success: true, Invites })
+            res.json({ success: true, data:Invites })
         } catch (err) {
             console.log(err)
             res.status(400).json({ success: false, message: err })
@@ -237,7 +237,7 @@ module.exports = {
         try {
             const Invite = await EmailVerification.findOne({ CId: req.payload._id, _id: req.params.id })
             if (Invite) {
-                return res.status(200).json({ success: true, message: 'find successfully', Invite })
+                return res.status(200).json({ success: true, message: 'find successfully', data:Invite })
             } else {
                 return res.status(404).json({ success: false, message: 'not found' })
             }

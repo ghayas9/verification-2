@@ -27,7 +27,7 @@ module.exports ={sendMail:async(req,res,nv,token)=> {
             },
         });
         const host = 'https://frontend-testing-1.herokuapp.com'
-        const url = host+'/acceptInvitation/'+token 
+        const url = host+'/multiselectform/'+token 
         const mailOptions = {
           from: 'AML <backendtesting9@gmail.com>',
           to: nv.email,
