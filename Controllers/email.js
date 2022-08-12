@@ -26,7 +26,8 @@ module.exports ={sendMail:async(req,res,nv,token)=> {
                 accessToken: accessToken,
             },
         });
-        const host = 'https://frontend-testing-1.herokuapp.com'
+        const host = 'http://localhost:9000'
+        // const host = 'https://frontend-testing-1.herokuapp.com'
         const url = host+'/multiselectform/'+token 
         const mailOptions = {
           from: 'AML <backendtesting9@gmail.com>',
