@@ -69,12 +69,17 @@ module.exports = {
                                 
                             },
                         })
-                       if(data.error){
+                       if(data.data.error){
                         return res.status(400).json({
                             success:false,
                             message:data.error.message
                         })
                        }
+                    //    if(result.face){
+                    //     if(result.face.error_message){
+                    //         return res.status(400).json({success:true,message:result.face.error_message})
+                    //     }
+                    //     }
                     }catch(err){
                         console.log(err);
                         return res.status(500).json({
@@ -104,6 +109,7 @@ module.exports = {
                           }
                         })
 
+                        console.log(up);
                         return res.json({
                             success:true,
                             message:'douc under review'
