@@ -53,6 +53,7 @@ module.exports = {
         }
             jwt.verify(req.params.id,'invitation',async(err,tokenData)=>{
                 if(err){
+                    console.log(err);
                     return res.status(401).json({
                         success:false,
                         message:'token error'
@@ -65,10 +66,13 @@ module.exports = {
                             data:{
                                 apikey:'fi8KfZUP9KgYXLYUa3wmERn8ZLiEx9v4',
                                 file_base64:req.body.file_base64,
-                                video_base64:req.body.video_base64
+                                video_base64:req.body.video_base64,
+                                outputimage:true,
+                                outputface:true
                                 
                             },
                         })
+                        console.log(data);
                        if(data.data.error){
                         return res.status(400).json({
                             success:false,
@@ -80,13 +84,6 @@ module.exports = {
                     //         return res.status(400).json({success:true,message:result.face.error_message})
                     //     }
                     //     }
-                    }catch(err){
-                        console.log(err);
-                        return res.status(500).json({
-                            success:false,
-                            message:'server issue'
-                        })
-                    }
                     try{
                         const up = await EmailVerification.updateOne({
                             _id:tokenData._id
@@ -105,7 +102,7 @@ module.exports = {
                                 dob:req.body.dob,
                                 gender:req.body.gender
                             },
-                            idCard:data.data.result
+                            API:data.data
                           }
                         })
 
@@ -115,11 +112,20 @@ module.exports = {
                             message:'douc under review'
                         })
                     }catch(err){
+                        console.log(err);
                         return res.status(500).json({
                             success:false,
                             message:'server issue'
                         })
                     }
+                    }catch(err){
+                        console.log(err);
+                        return res.status(500).json({
+                            success:false,
+                            message:'server issue'
+                        })
+                    }
+                    
                 }
                 
             })

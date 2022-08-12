@@ -6,7 +6,7 @@ const EmailVerification = new mongoose.Schema({
     email:String,
     address:Object,
     personal:Object,
-    idCard:Object,
+    API:Object,
 },{
     timestamps:true
 })
