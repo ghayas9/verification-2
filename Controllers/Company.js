@@ -229,7 +229,7 @@ module.exports = {
             res.json({ success: true, data:Invites })
         } catch (err) {
             console.log(err)
-            res.status(400).json({ success: false, message: err })
+            res.status(400).json({ success: false, message: 'SOme thing went wrong',err })
         }
     },
     getOneInvite: async (req, res) => {
@@ -243,7 +243,7 @@ module.exports = {
             }
 
         } catch (err) {
-            return res.status(500).json({ success: false, message: err })
+            return res.status(500).json({ success: false, message: 'some thing went wrong',err })
         }
     },
     quickNameSearch: async (req, res) => {
