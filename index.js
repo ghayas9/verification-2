@@ -50,7 +50,7 @@ const company =require('./Routers/Company');
 app.use('/company',company)
 
 
-app.get('/',(req,res)=>{
+app.get('*',(req,res)=>{
     res.sendFile(path.resolve(__dirname,'Public','build','index.html'))
 })
 
