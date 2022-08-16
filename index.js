@@ -5,6 +5,7 @@ const mongoose =require('mongoose');
 const cors =require('cors');
 const multer = require('multer')
 const port = process.env.PORT || 9000
+const path = require('path')
 
 // **************************************//
 // ***********   DATABASE CONN *********//
@@ -24,6 +25,7 @@ catch(()=>{console.warn('not connected')});
 // ***********   DATABASE CONN *********//
 // ************************************//
 app.use('/image', express.static(__dirname + '/Public/Image'))
+app.use(express.static(__dirname + '/Public/build'))
 app.use(multer().any())
 app.use(cors({
     origin:'*'
@@ -49,7 +51,7 @@ app.use('/company',company)
 
 
 app.get('/',(req,res)=>{
-    res.send('hh')
+    res.sendFile(path.resolve(__dirname,'Public','build','index.html'))
 })
 
 

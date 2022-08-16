@@ -26,8 +26,8 @@ module.exports ={sendMail:async(req,res,nv,token)=> {
                 accessToken: accessToken,
             },
         });
-        // const host = 'http://localhost:9000'
-        const host = 'https://gleaming-babka-1639a3.netlify.app/'
+        const host = 'http://localhost:9000'
+        // const host = 'https://gleaming-babka-1639a3.netlify.app/'
         // const host = 'https://frontend-testing-1.herokuapp.com'
         const url = host+'/multiselectform/'+token 
         const mailOptions = {
