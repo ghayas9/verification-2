@@ -305,7 +305,7 @@ module.exports = {
                         amlResult = amlResult + `${i + 1}:${el.note ? el.note : el.database}`;
                     })
                 }else{
-                    var amlResult = 'No record found'
+                     amlResult = 'No record found'
                 }
                 const newQuickSearch = new quickSearch()
                 newQuickSearch._id = mongoose.Types.ObjectId()
