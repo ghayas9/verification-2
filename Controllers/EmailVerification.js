@@ -11,15 +11,15 @@ module.exports = {
                 reqfile[x.fieldname]=x            
             }
         }
-        if(!reqfile.video){
-            if(req.body.video_base64 ==undefined || req.body.video_base64 == ''){
+        if(!reqfile.face){
+            if(req.body.face_base64 ==undefined || req.body.face_base64 == ''){
                return res.json({
                 success:false,
-                message:'video is required'
+                message:'face is required'
                })
             }
         }else{
-            req.body.video_base64 = reqfile.video.buffer.toString('base64')
+            req.body.face_base64 = reqfile.face.buffer.toString('base64')
         }
         //////////////////////FILE/////////////////////
         if(!reqfile.file){
@@ -42,7 +42,7 @@ module.exports = {
             post_code: Joi.string().required(),
             city: Joi.string().required(),
             country: Joi.string().required(),
-            video_base64: Joi.string().required(),
+            face_base64: Joi.string().required(),
             file_base64: Joi.string().required(),
         }).validate(req.body)
         if (value.error) {
@@ -66,10 +66,10 @@ module.exports = {
                             data:{
                                 apikey:'fi8KfZUP9KgYXLYUa3wmERn8ZLiEx9v4',
                                 file_base64:req.body.file_base64,
-                                video_base64:req.body.video_base64,
+                                face_base64:req.body.face_base64,
                                 outputimage:true,
-                                outputface:true
-                                
+                                outputface:true,
+                                aml_check:true
                             },
                         })
                         console.log(data);
@@ -79,12 +79,19 @@ module.exports = {
                             message:data.error.message
                         })
                        }
-                    //    if(result.face){
-                    //     if(result.face.error_message){
-                    //         return res.status(400).json({success:true,message:result.face.error_message})
-                    //     }
-                    //     }
+                       if(result.face){
+                            if(result.face.error_message){
+                                return res.status(400).json({
+                                    success:false,
+                                    message:result.face.error_message
+                                })
+                            }
+                        }
                     try{
+
+                        ///Image link fix
+                        
+                        ///Image link fix
                         const up = await EmailVerification.updateOne({
                             _id:tokenData._id
                         },{

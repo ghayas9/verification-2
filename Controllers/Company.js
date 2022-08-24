@@ -64,7 +64,8 @@ module.exports = {
             console.log(err)
             res.status(500).json({
                 success: false,
-                message: err
+                message: 'some thing went wrong',
+                err
             })
         }
 
@@ -98,14 +99,15 @@ module.exports = {
                     const data = await newCompany.save()
                   return  res.status(200).json({
                         success: true,
-                        message: 'successfully added',
+                        message: 'successfully register',
                         comp: data
                     })
                 } catch (err) {
                     console.log(err)
                     return res.status(400).json({
                         success: false,
-                        message: err
+                        message: 'some thing went wrong',
+                        err
                     })
                 }
         }else{
@@ -220,7 +222,11 @@ module.exports = {
 
             return await sendMail(req, res, nv, token)
         } catch (err) {
-            return res.status(500).json({ success: false, message: err })
+            return res.status(500).json({ 
+                success: false, 
+                message: 'some thing went wrong',
+                err
+            })
         }
     },
     AllInitation: async (req, res) => {
@@ -229,7 +235,11 @@ module.exports = {
             res.json({ success: true, data:Invites })
         } catch (err) {
             console.log(err)
-            res.status(400).json({ success: false, message: 'SOme thing went wrong',err })
+            res.status(400).json({ 
+                success: false, 
+                message: 'Some thing went wrong',
+                err 
+            })
         }
     },
     getOneInvite: async (req, res) => {
@@ -237,13 +247,24 @@ module.exports = {
         try {
             const Invite = await EmailVerification.findOne({ CId: req.payload._id, _id: req.params.id })
             if (Invite) {
-                return res.status(200).json({ success: true, message: 'find successfully', data:Invite })
+                return res.status(200).json({ 
+                    success: true, 
+                    message: 'success', 
+                    data:Invite 
+                })
             } else {
-                return res.status(404).json({ success: false, message: 'not found' })
+                return res.status(404).json({ 
+                    success: false, 
+                    message: 'not found' 
+                })
             }
 
         } catch (err) {
-            return res.status(500).json({ success: false, message: 'some thing went wrong',err })
+            return res.status(500).json({ 
+                success: false, 
+                message: 'some thing went wrong',
+                err 
+            })
         }
     },
     quickNameSearch: async (req, res) => {
@@ -272,8 +293,6 @@ module.exports = {
                 url: 'https://api.idanalyzer.com/aml',
                 data: JSON.stringify(body)
             })
-            // console.log(data);
-
             if (data.data.error) {
                 return res.status(400).json({
                     success: false,
@@ -282,9 +301,11 @@ module.exports = {
             } else {
                 var amlResult = ''
                 if (data.data.items.length > 0) {
-                    amlResult = response.items.map((el, i) => {
-                        return `${i + 1}:${el.note ? el.note : el.database}`;
+                    data.data.items.map((el, i) => {
+                        amlResult = amlResult + `${i + 1}:${el.note ? el.note : el.database}`;
                     })
+                }else{
+                    var amlResult = 'No record found'
                 }
                 const newQuickSearch = new quickSearch()
                 newQuickSearch._id = mongoose.Types.ObjectId()
@@ -293,6 +314,7 @@ module.exports = {
                 newQuickSearch.dob = req.body.dob
                 newQuickSearch.country = req.body.country
                 newQuickSearch.amlResult = amlResult
+                newQuickSearch.API = data.data.items
 
                 const result = await newQuickSearch.save()
 
