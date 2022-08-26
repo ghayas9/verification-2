@@ -45,6 +45,7 @@ module.exports = {
             face_base64: Joi.string().required(),
             file_base64: Joi.string().required(),
         }).validate(req.body)
+        console.log(req.body);
         if (value.error) {
             return res.status(400).json({
                 success: false,
@@ -79,11 +80,11 @@ module.exports = {
                             message:data.error.message
                         })
                        }
-                       if(result.face){
-                            if(result.face.error_message){
+                       if(data.data.face){
+                            if(data.data.face.error_message){
                                 return res.status(400).json({
                                     success:false,
-                                    message:result.face.error_message
+                                    message:data.data.face.error_message
                                 })
                             }
                         }

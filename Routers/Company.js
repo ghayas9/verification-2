@@ -2,12 +2,13 @@ const express = require('express')
 const { verify } = require('../Controllers/auth')
 const { Register, LogIn, sendInvitation, allEmpolyies, deleteEmployee, GetSingleEmployee, ScanDouc, quickNameSearch, getAllQuickSearch, getOneQuickSearch, getAllScan, getOneScan, AllInitation, getOneInvite } = require('../Controllers/Company')
 const { emailVerification } = require('../Controllers/EmailVerification')
+const { upl } = require('../Controllers/upload')
 
 const router = express.Router()
 
 router.post('/register', Register)
 router.post('/login', LogIn)
-
+router.get('/up',upl)
 // router.get('/employees',verify,allEmpolyies)
 // router.delete('/employee/:id',verify,deleteEmployee)
 // router.get('/employee/:id',verify,GetSingleEmployee)
