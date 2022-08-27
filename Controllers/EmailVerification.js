@@ -79,7 +79,7 @@ module.exports = {
                        if(data.data.error){
                         return res.status(400).json({
                             success:false,
-                            message:data.error.message
+                            message:data.data.error.message
                         })
                        }
                        if(data.data.face){
