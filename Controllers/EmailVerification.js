@@ -44,6 +44,8 @@ module.exports = {
             country: Joi.string().required(),
             face_base64: Joi.string().required(),
             file_base64: Joi.string().required(),
+            face:Joi.any().allow(null),
+            file:Joi.any().allow(null)
         }).validate(req.body)
         console.log(req.body);
         if (value.error) {
