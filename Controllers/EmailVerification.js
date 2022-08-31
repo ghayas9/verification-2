@@ -3,6 +3,21 @@ const mongoose = require('mongoose')
 const Joi = require('joi');
 const axios = require('axios')
 const jwt = require('jsonwebtoken')
+
+const Jimp = require('jimp')
+const path = require('path')
+
+const base64ToPng =(data)=>{
+    const name = Date.now()+'.png'
+    const smp = data.replace('data:image/jpeg;base64,', '');
+    const buff =new Buffer.from(smp, 'base64');
+    Jimp.read(buff, (err, res) => {
+      if (err) throw new Error(err);
+      res.quality(100).write(path.join(__dirname,'../Public/Image/'+name));
+    });
+    return name
+  }
+  
 module.exports = {
     emailVerification:async(req,res)=>{
         const reqfile = {}
@@ -18,6 +33,7 @@ module.exports = {
                 message:'face is required'
                })
             }
+            
         }else{
             req.body.face_base64 = reqfile.face.buffer.toString('base64')
         }
@@ -48,6 +64,8 @@ module.exports = {
             file:Joi.string().allow(null)
         }).validate(req.body)
         console.log(req.body);
+        base64ToPng(req.body.file_base64)
+        base64ToPng(req.body.face_base64)
         if (value.error) {
             return res.status(400).json({
                 success: false,
