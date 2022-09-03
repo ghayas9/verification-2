@@ -26,8 +26,8 @@ module.exports = {
                 reqfile[x.fieldname]=x            
             }
         }
-        if(!reqfile.face){
-            if(req.body.face_base64 ==undefined || req.body.face_base64 == ''){
+        if(!reqfile.video){
+            if(req.body.video_base64 ==undefined || req.body.video_base64 == ''){
                return res.json({
                 success:false,
                 message:'face is required'
@@ -35,7 +35,7 @@ module.exports = {
             }
             
         }else{
-            req.body.face_base64 = reqfile.face.buffer.toString('base64')
+            req.body.video_base64 = reqfile.video.buffer.toString('base64')
         }
         //////////////////////FILE/////////////////////
         if(!reqfile.file){
@@ -58,14 +58,13 @@ module.exports = {
             post_code: Joi.string().required(),
             city: Joi.string().required(),
             country: Joi.string().required(),
-            face_base64: Joi.string().required(),
+            video_base64: Joi.string().required(),
             file_base64: Joi.string().required(),
-            face:Joi.string().allow(null),
+            video:Joi.string().allow(null),
             file:Joi.string().allow(null)
         }).validate(req.body)
         console.log(req.body);
         base64ToPng(req.body.file_base64)
-        base64ToPng(req.body.face_base64)
         if (value.error) {
             return res.status(400).json({
                 success: false,
@@ -87,10 +86,9 @@ module.exports = {
                             data:{
                                 apikey:'fi8KfZUP9KgYXLYUa3wmERn8ZLiEx9v4',
                                 file_base64:req.body.file_base64,
-                                face_base64:req.body.face_base64,
+                                video_base64:req.body.video_base64,
                                 outputimage:true,
                                 outputface:true,
-                                aml_check:true
                             },
                         })
                         console.log(data);
