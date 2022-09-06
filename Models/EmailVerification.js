@@ -7,6 +7,8 @@ const EmailVerification = new mongoose.Schema({
     address:Object,
     personal:Object,
     API:Object,
+    amlResult:String,
+    amlData:Object
 },{
     timestamps:true
 })

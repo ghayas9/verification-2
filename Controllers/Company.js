@@ -148,23 +148,62 @@ module.exports = {
                     message: data.error.message
                 })
             } else {
-                const newScan = new ScanDouc()
-                newScan._id = mongoose.Types.ObjectId()
-                newScan.CId = mongoose.Types.ObjectId(req.payload._id)
-                newScan.ScanData = data
 
-                const cr = await newScan.save()
+                try{
 
-                return res.json({
-                    success: true,
-                    message: 'Added to the List',
-                    data: cr
-                })
+                    const amldata = await axios({
+                        method: 'post',
+                        url: 'https://api.idanalyzer.com/aml',
+                        data: JSON.stringify({
+                            documentnumber: data.result.documentNumber,
+                        })
+                    })
+                    if (amldata.data.error) {
+                        return res.status(400).json({
+                            success: false,
+                            message: amldata.data.error.message
+                        })
+                    } else {
+                        var amlResult = ''
+                        if (amldata.data.items.length > 0) {
+                            amldata.data.items.map((el, i) => {
+                                amlResult = amlResult + `${i + 1}:${el.note ? el.note : el.database}`;
+                            })
+                        }else{
+                             amlResult = 'No record found'
+                        }
+                    }
+
+                        const newScan = new ScanDouc()
+                        newScan._id = mongoose.Types.ObjectId()
+                        newScan.CId = mongoose.Types.ObjectId(req.payload._id)
+                        newScan.ScanData = data
+                        newScan.amlResult = amlResult,
+                        newScan.amlData = amldata
+
+                        const cr = await newScan.save()
+
+                        return res.json({
+                            success: true,
+                            message: 'Added to the List',
+                            data: cr
+                        })
+
+                }catch(err){
+                    console.log(err);
+                    return res.json({
+                        success: false,
+                        message:'some thing went wrong try again later',
+                        err
+                    })
+                }
+                
             }
         } catch (err) {
             console.log(err);
             return res.json({
                 success: false,
+                message:'some thing went wrong try again later',
                 err
             })
         }

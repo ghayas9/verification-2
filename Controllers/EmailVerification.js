@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken')
 const Jimp = require('jimp')
 const path = require('path')
 
+const apikey ='fi8KfZUP9KgYXLYUa3wmERn8ZLiEx9v4'
+
 const base64ToPng =(data)=>{
     const name = Date.now()+'.png'
     const smp = data.replace('data:image/jpeg;base64,', '');
@@ -84,7 +86,7 @@ module.exports = {
                             method:'post',
                             url:'https://api.idanalyzer.com',
                             data:{
-                                apikey:'fi8KfZUP9KgYXLYUa3wmERn8ZLiEx9v4',
+                                apikey,
                                 file_base64:req.body.file_base64,
                                 video_base64:req.body.video_base64,
                                 outputimage:true,
@@ -106,44 +108,81 @@ module.exports = {
                                 })
                             }
                         }
-                    try{
-
-                        ///Image link fix
                         
-                        ///Image link fix
-                        const up = await EmailVerification.updateOne({
-                            _id:tokenData._id
-                        },{
-                          $set:{
-                            address : {
-                                address:req.body.address,
-                                post_code:req.body.post_code,
-                                city:req.body.city,
-                                // address_prof:'lnk'
-                            },
-                            personal:{
-                                name:req.body.name,
-                                surname:req.body.surname,
-                                citizenship:req.body.citizenship,
-                                dob:req.body.dob,
-                                gender:req.body.gender
-                            },
-                            API:data.data
-                          }
-                        })
+                        //////AML CHECKING///////
+                        try {
+                            const amldata = await axios({
+                                method: 'post',
+                                url: 'https://api.idanalyzer.com/aml',
+                                data: JSON.stringify({
+                                    documentnumber: data.data.result.documentNumber,
+                                })
+                            })
+                            if (amldata.data.error) {
+                                return res.status(400).json({
+                                    success: false,
+                                    message: amldata.data.error.message
+                                })
+                            } else {
+                                var amlResult = ''
+                                if (amldata.data.items.length > 0) {
+                                    amldata.data.items.map((el, i) => {
+                                        amlResult = amlResult + `${i + 1}:${el.note ? el.note : el.database}`;
+                                    })
+                                }else{
+                                     amlResult = 'No record found'
+                                }
+                                try{
 
-                        console.log(up);
-                        return res.json({
-                            success:true,
-                            message:'douc under review'
-                        })
-                    }catch(err){
-                        console.log(err);
-                        return res.status(500).json({
-                            success:false,
-                            message:'server issue'
-                        })
-                    }
+                                    ///Image link fix
+                                    
+                                    ///Image link fix
+                                    const up = await EmailVerification.updateOne({
+                                        _id:tokenData._id
+                                    },{
+                                    $set:{
+                                        address : {
+                                            address:req.body.address,
+                                            post_code:req.body.post_code,
+                                            city:req.body.city,
+                                            // address_prof:'lnk'
+                                        },
+                                        personal:{
+                                            name:req.body.name,
+                                            surname:req.body.surname,
+                                            citizenship:req.body.citizenship,
+                                            dob:req.body.dob,
+                                            gender:req.body.gender
+                                        },
+                                        API:data.data,
+                                        amlResult:amlResult,
+                                        amlData:amldata.data.items
+                                    }
+                                    })
+                                    console.log(up);
+                                    return res.json({
+                                        success:true,
+                                        message:'douc under review'
+                                    })
+                                }catch(err){
+                                    console.log(err);
+                                    return res.status(500).json({
+                                        success:false,
+                                        message:'server issue'
+                                    })
+                                }
+                                
+                            }
+                        } catch (err) {
+                            console.log(err);
+                            return res.status(500).json({
+                                success: false,
+                                message: 'server issue please try later',
+                                err
+                            })
+                        }
+                        /////AML CHECKING///////
+
                     }catch(err){
                         console.log(err);
                         return res.status(500).json({
