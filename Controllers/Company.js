@@ -125,6 +125,40 @@ module.exports = {
             })
         }
     },
+    ChangePassword:async(req,res)=>{
+        const value = Joi.object({
+            currentPassword: Joi.string().required(),
+            newPassword: Joi.string().required(),
+            conformPassword: Joi.any().equal(Joi.ref('newPassword'))
+            .required()
+            .label('Confirm password')
+            .messages({ 'any.only': '{{#label}} does not match' }),
+        }).validate(req.body)
+        if (value.error) {
+            return res.status(400).json({
+                success: false, message: value.error.message
+            })
+        }
+        try{
+        const UpdatePassword = new Company()
+        const up = await UpdatePassword.updateOne({ _id: req.payload._id }, {
+                $set: {
+                    password: bcrypt.hashSync(req.body.newPassword, salt)
+                }
+            })
+            return res.json({
+                success: true,
+                message:'password has been changed successfully'
+            })
+        }catch(err){
+            return res.status(400).json({
+                success: false,
+                err,
+                message:'try again later'
+            })
+
+        }
+    },
     ScanDouc: async (req, res) => {
         if (req.files) {
             if (req.files.length != 2) {
