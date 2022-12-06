@@ -5,9 +5,12 @@ const { emailVerification } = require('../Controllers/EmailVerification')
 const { upl } = require('../Controllers/upload')
 
 const router = express.Router()
-
 router.post('/register', Register)
 router.post('/login', LogIn)
+
+
+
+///Update Company details ////
 router.post('/changepassword',ChangePassword)
 
 
