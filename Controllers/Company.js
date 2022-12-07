@@ -1,4 +1,4 @@
-/////ERROR CODE 
+//ERROR CODE 
 //wrong password 403
 //bad req 400
 //server .. 500
@@ -140,8 +140,7 @@ module.exports = {
             })
         }
         try{
-        const UpdatePassword = new Company()
-        const up = await UpdatePassword.updateOne({ _id: req.payload._id }, {
+        const up = await Company.updateOne({ _id: req.payload._id }, {
                 $set: {
                     password: bcrypt.hashSync(req.body.newPassword, salt)
                 }
@@ -157,6 +156,55 @@ module.exports = {
                 message:'try again later'
             })
 
+        }
+    },
+    UpdateContact:async(req,res)=>{
+        const value = Joi.object({
+            contact: Joi.string().required()
+        }).validate(req.body)
+        if (value.error) {
+            return res.status(400).json({
+                success: false, message: value.error.message
+            })
+        }
+        try{
+            const up = await Company.updateOne({ _id: req.payload._id }, {
+                $set: {
+                    contact: req.body.contact
+                }
+            })
+            const newdata = await Company.findOne({_id:req.payload._id},{password:0})
+            return res.json({
+                success: true,
+                message: 'contact updated successfully',
+                data:newdata
+            })
+
+        }catch(err){
+            return res.json({
+                success: false,
+                message: 'try again later',
+            })
+        }
+    },
+    getDetails:async(req,res)=>{
+        try{
+            const data = await Company.findOne({
+                _id:req.payload._id
+            },{
+                password:0
+            })
+
+            return res.json({
+                sucess:true,
+                data
+            })
+        }catch(err){
+            return res.status(400).json({
+                sucess:false,
+                message:'try again later',
+                err
+            })
         }
     },
     ScanDouc: async (req, res) => {

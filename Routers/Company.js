@@ -1,6 +1,8 @@
 const express = require('express')
 const { verify } = require('../Controllers/auth')
-const { Register, LogIn, sendInvitation, allEmpolyies, deleteEmployee, GetSingleEmployee, ScanDouc, quickNameSearch, getAllQuickSearch, getOneQuickSearch, getAllScan, getOneScan, AllInitation, getOneInvite, ChangePassword } = require('../Controllers/Company')
+const { Register, LogIn, sendInvitation, allEmpolyies, deleteEmployee, GetSingleEmployee, ScanDouc, quickNameSearch, getAllQuickSearch, getOneQuickSearch, getAllScan, getOneScan, AllInitation, getOneInvite, ChangePassword, UpdateContact, getDetails } = require('../Controllers/Company')
+const { ResetPassword } = require('../Controllers/Company/ForgetPassword')
+const ForgetPassword = require('../Controllers/Company/ForgetPassword')
 const { emailVerification } = require('../Controllers/EmailVerification')
 const { upl } = require('../Controllers/upload')
 
@@ -8,10 +10,17 @@ const router = express.Router()
 router.post('/register', Register)
 router.post('/login', LogIn)
 
-
+//GET Company detail //
+router.get('/',verify,getDetails)
 
 ///Update Company details ////
-router.post('/changepassword',ChangePassword)
+router.post('/update/password',verify,ChangePassword)
+router.post('/update/contact',verify,UpdateContact)
+
+///forget password
+
+router.post('/forgetpassword',ForgetPassword)
+router.post('/forgetresetpassword/:token',ResetPassword)
 
 
 router.get('/up',upl)
